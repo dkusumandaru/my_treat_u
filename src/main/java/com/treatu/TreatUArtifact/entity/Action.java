@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "action", catalog = "treatUfinal", schema = "")
+@Table(name = "action")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Action.findAll", query = "SELECT a FROM Action a"),
-    @NamedQuery(name = "Action.findByIdAction", query = "SELECT a FROM Action a WHERE a.idAction = :idAction"),
-    @NamedQuery(name = "Action.findByNameAction", query = "SELECT a FROM Action a WHERE a.nameAction = :nameAction"),
-    @NamedQuery(name = "Action.findByActiveAction", query = "SELECT a FROM Action a WHERE a.activeAction = :activeAction")})
+    @NamedQuery(name = "Action.findAll", query = "SELECT a FROM Action a")
+    , @NamedQuery(name = "Action.findByIdAction", query = "SELECT a FROM Action a WHERE a.idAction = :idAction")
+    , @NamedQuery(name = "Action.findByNameAction", query = "SELECT a FROM Action a WHERE a.nameAction = :nameAction")
+    , @NamedQuery(name = "Action.findByActiveAction", query = "SELECT a FROM Action a WHERE a.activeAction = :activeAction")})
 public class Action implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +53,8 @@ public class Action implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_action")
     private String activeAction;
-    @OneToMany(mappedBy = "idAction")
-    private Collection<Log> logCollection;
+    @OneToMany(mappedBy = "idAction", fetch = FetchType.LAZY)
+    private List<Log> logList;
 
     public Action() {
     }
@@ -94,12 +94,12 @@ public class Action implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Log> getLogCollection() {
-        return logCollection;
+    public List<Log> getLogList() {
+        return logList;
     }
 
-    public void setLogCollection(Collection<Log> logCollection) {
-        this.logCollection = logCollection;
+    public void setLogList(List<Log> logList) {
+        this.logList = logList;
     }
 
     @Override
@@ -127,5 +127,4 @@ public class Action implements Serializable {
         return "com.treatu.TreatUArtifact.entity.Action[ idAction=" + idAction + " ]";
     }
     
-
 }

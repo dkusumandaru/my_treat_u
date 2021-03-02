@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "StressLevel.findAll", query = "SELECT s FROM StressLevel s")
     , @NamedQuery(name = "StressLevel.findByIdStressLevel", query = "SELECT s FROM StressLevel s WHERE s.idStressLevel = :idStressLevel")
-    , @NamedQuery(name = "StressLevel.findByActive", query = "SELECT s FROM StressLevel s WHERE s.active = :active")})
+    , @NamedQuery(name = "StressLevel.findByActiveStressLevel", query = "SELECT s FROM StressLevel s WHERE s.activeStressLevel = :activeStressLevel")})
 public class StressLevel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,13 +45,13 @@ public class StressLevel implements Serializable {
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name_stress_level")
+    private String nameStressLevel;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "active")
-    private String active;
+    @Column(name = "active_stress_level")
+    private String activeStressLevel;
     @OneToMany(mappedBy = "idStressLevel", fetch = FetchType.LAZY)
     private List<Consultation> consultationList;
 
@@ -63,10 +62,10 @@ public class StressLevel implements Serializable {
         this.idStressLevel = idStressLevel;
     }
 
-    public StressLevel(Integer idStressLevel, String name, String active) {
+    public StressLevel(Integer idStressLevel, String nameStressLevel, String activeStressLevel) {
         this.idStressLevel = idStressLevel;
-        this.name = name;
-        this.active = active;
+        this.nameStressLevel = nameStressLevel;
+        this.activeStressLevel = activeStressLevel;
     }
 
     public Integer getIdStressLevel() {
@@ -77,20 +76,20 @@ public class StressLevel implements Serializable {
         this.idStressLevel = idStressLevel;
     }
 
-    public String getName() {
-        return name;
+    public String getNameStressLevel() {
+        return nameStressLevel;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameStressLevel(String nameStressLevel) {
+        this.nameStressLevel = nameStressLevel;
     }
 
-    public String getActive() {
-        return active;
+    public String getActiveStressLevel() {
+        return activeStressLevel;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setActiveStressLevel(String activeStressLevel) {
+        this.activeStressLevel = activeStressLevel;
     }
 
     @XmlTransient

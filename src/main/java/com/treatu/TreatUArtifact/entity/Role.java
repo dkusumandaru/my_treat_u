@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -29,13 +28,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author D
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role", catalog = "treat_u", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
     , @NamedQuery(name = "Role.findByIdRole", query = "SELECT r FROM Role r WHERE r.idRole = :idRole")
-    , @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")
-    , @NamedQuery(name = "Role.findByActive", query = "SELECT r FROM Role r WHERE r.active = :active")})
+    , @NamedQuery(name = "Role.findByNameRole", query = "SELECT r FROM Role r WHERE r.nameRole = :nameRole")
+    , @NamedQuery(name = "Role.findByActiveRole", query = "SELECT r FROM Role r WHERE r.activeRole = :activeRole")})
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,13 +44,13 @@ public class Role implements Serializable {
     @Column(name = "id_role")
     private Integer idRole;
     @Size(max = 255)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name_role")
+    private String nameRole;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "active")
-    private String active;
+    @Column(name = "active_role")
+    private String activeRole;
     @OneToMany(mappedBy = "idRole", fetch = FetchType.LAZY)
     private List<Users> usersList;
 
@@ -62,9 +61,9 @@ public class Role implements Serializable {
         this.idRole = idRole;
     }
 
-    public Role(Integer idRole, String active) {
+    public Role(Integer idRole, String activeRole) {
         this.idRole = idRole;
-        this.active = active;
+        this.activeRole = activeRole;
     }
 
     public Integer getIdRole() {
@@ -75,20 +74,20 @@ public class Role implements Serializable {
         this.idRole = idRole;
     }
 
-    public String getName() {
-        return name;
+    public String getNameRole() {
+        return nameRole;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRole(String nameRole) {
+        this.nameRole = nameRole;
     }
 
-    public String getActive() {
-        return active;
+    public String getActiveRole() {
+        return activeRole;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setActiveRole(String activeRole) {
+        this.activeRole = activeRole;
     }
 
     @XmlTransient

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "department", catalog = "treatUfinal", schema = "")
+@Table(name = "department")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
-    @NamedQuery(name = "Department.findByIdDepartment", query = "SELECT d FROM Department d WHERE d.idDepartment = :idDepartment"),
-    @NamedQuery(name = "Department.findByNameDepartment", query = "SELECT d FROM Department d WHERE d.nameDepartment = :nameDepartment"),
-    @NamedQuery(name = "Department.findByActiveDepartment", query = "SELECT d FROM Department d WHERE d.activeDepartment = :activeDepartment")})
+    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d")
+    , @NamedQuery(name = "Department.findByIdDepartment", query = "SELECT d FROM Department d WHERE d.idDepartment = :idDepartment")
+    , @NamedQuery(name = "Department.findByNameDepartment", query = "SELECT d FROM Department d WHERE d.nameDepartment = :nameDepartment")
+    , @NamedQuery(name = "Department.findByActiveDepartment", query = "SELECT d FROM Department d WHERE d.activeDepartment = :activeDepartment")})
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +51,8 @@ public class Department implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_department")
     private String activeDepartment;
-    @OneToMany(mappedBy = "idDepartment")
-    private Collection<Users> usersCollection;
+    @OneToMany(mappedBy = "idDepartment", fetch = FetchType.LAZY)
+    private List<Users> usersList;
 
     public Department() {
     }
@@ -91,12 +91,12 @@ public class Department implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public List<Users> getUsersList() {
+        return usersList;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
+    public void setUsersList(List<Users> usersList) {
+        this.usersList = usersList;
     }
 
     @Override
@@ -125,4 +125,3 @@ public class Department implements Serializable {
     }
     
 }
-

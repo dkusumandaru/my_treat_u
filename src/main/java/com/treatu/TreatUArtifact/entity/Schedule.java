@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,10 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Schedule.findAll", query = "SELECT s FROM Schedule s")
     , @NamedQuery(name = "Schedule.findByIdSchedule", query = "SELECT s FROM Schedule s WHERE s.idSchedule = :idSchedule")
-    , @NamedQuery(name = "Schedule.findBySessionName", query = "SELECT s FROM Schedule s WHERE s.sessionName = :sessionName")
-    , @NamedQuery(name = "Schedule.findByStartTime", query = "SELECT s FROM Schedule s WHERE s.startTime = :startTime")
-    , @NamedQuery(name = "Schedule.findByEndTime", query = "SELECT s FROM Schedule s WHERE s.endTime = :endTime")
-    , @NamedQuery(name = "Schedule.findByActive", query = "SELECT s FROM Schedule s WHERE s.active = :active")})
+    , @NamedQuery(name = "Schedule.findByNameSchedule", query = "SELECT s FROM Schedule s WHERE s.nameSchedule = :nameSchedule")
+    , @NamedQuery(name = "Schedule.findByStartTimeSchedule", query = "SELECT s FROM Schedule s WHERE s.startTimeSchedule = :startTimeSchedule")
+    , @NamedQuery(name = "Schedule.findByEndTimeSchedule", query = "SELECT s FROM Schedule s WHERE s.endTimeSchedule = :endTimeSchedule")
+    , @NamedQuery(name = "Schedule.findByActiveSchedule", query = "SELECT s FROM Schedule s WHERE s.activeSchedule = :activeSchedule")})
 public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,19 +49,19 @@ public class Schedule implements Serializable {
     @Column(name = "id_schedule")
     private String idSchedule;
     @Size(max = 50)
-    @Column(name = "session_name")
-    private String sessionName;
-    @Column(name = "start_time")
+    @Column(name = "name_schedule")
+    private String nameSchedule;
+    @Column(name = "start_time_schedule")
     @Temporal(TemporalType.TIME)
-    private Date startTime;
-    @Column(name = "end_time")
+    private Date startTimeSchedule;
+    @Column(name = "end_time_schedule")
     @Temporal(TemporalType.TIME)
-    private Date endTime;
+    private Date endTimeSchedule;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "active")
-    private String active;
+    @Column(name = "active_schedule")
+    private String activeSchedule;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSchedule", fetch = FetchType.LAZY)
     private List<ScheduleDetail> scheduleDetailList;
 
@@ -73,9 +72,9 @@ public class Schedule implements Serializable {
         this.idSchedule = idSchedule;
     }
 
-    public Schedule(String idSchedule, String active) {
+    public Schedule(String idSchedule, String activeSchedule) {
         this.idSchedule = idSchedule;
-        this.active = active;
+        this.activeSchedule = activeSchedule;
     }
 
     public String getIdSchedule() {
@@ -86,36 +85,36 @@ public class Schedule implements Serializable {
         this.idSchedule = idSchedule;
     }
 
-    public String getSessionName() {
-        return sessionName;
+    public String getNameSchedule() {
+        return nameSchedule;
     }
 
-    public void setSessionName(String sessionName) {
-        this.sessionName = sessionName;
+    public void setNameSchedule(String nameSchedule) {
+        this.nameSchedule = nameSchedule;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartTimeSchedule() {
+        return startTimeSchedule;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartTimeSchedule(Date startTimeSchedule) {
+        this.startTimeSchedule = startTimeSchedule;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getEndTimeSchedule() {
+        return endTimeSchedule;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setEndTimeSchedule(Date endTimeSchedule) {
+        this.endTimeSchedule = endTimeSchedule;
     }
 
-    public String getActive() {
-        return active;
+    public String getActiveSchedule() {
+        return activeSchedule;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setActiveSchedule(String activeSchedule) {
+        this.activeSchedule = activeSchedule;
     }
 
     @XmlTransient
@@ -153,4 +152,3 @@ public class Schedule implements Serializable {
     }
     
 }
-

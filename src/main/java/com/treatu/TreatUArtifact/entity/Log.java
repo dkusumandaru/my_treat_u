@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -26,15 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "log", catalog = "treatUfinal", schema = "")
+@Table(name = "log")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l"),
-    @NamedQuery(name = "Log.findByIdLog", query = "SELECT l FROM Log l WHERE l.idLog = :idLog"),
-    @NamedQuery(name = "Log.findByDateLog", query = "SELECT l FROM Log l WHERE l.dateLog = :dateLog")})
+    @NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l")
+    , @NamedQuery(name = "Log.findByIdLog", query = "SELECT l FROM Log l WHERE l.idLog = :idLog")
+    , @NamedQuery(name = "Log.findByDateLog", query = "SELECT l FROM Log l WHERE l.dateLog = :dateLog")})
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,13 +52,13 @@ public class Log implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLog;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users idUser;
     @JoinColumn(name = "id_action", referencedColumnName = "id_action")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Action idAction;
     @JoinColumn(name = "id_feature", referencedColumnName = "id_feature")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Feature idFeature;
 
     public Log() {
@@ -141,5 +141,4 @@ public class Log implements Serializable {
         return "com.treatu.TreatUArtifact.entity.Log[ idLog=" + idLog + " ]";
     }
     
-
 }

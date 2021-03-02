@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "feature", catalog = "treatUfinal", schema = "")
+@Table(name = "feature")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Feature.findAll", query = "SELECT f FROM Feature f"),
-    @NamedQuery(name = "Feature.findByIdFeature", query = "SELECT f FROM Feature f WHERE f.idFeature = :idFeature"),
-    @NamedQuery(name = "Feature.findByNameFeature", query = "SELECT f FROM Feature f WHERE f.nameFeature = :nameFeature"),
-    @NamedQuery(name = "Feature.findByActiveFeature", query = "SELECT f FROM Feature f WHERE f.activeFeature = :activeFeature")})
+    @NamedQuery(name = "Feature.findAll", query = "SELECT f FROM Feature f")
+    , @NamedQuery(name = "Feature.findByIdFeature", query = "SELECT f FROM Feature f WHERE f.idFeature = :idFeature")
+    , @NamedQuery(name = "Feature.findByNameFeature", query = "SELECT f FROM Feature f WHERE f.nameFeature = :nameFeature")
+    , @NamedQuery(name = "Feature.findByActiveFeature", query = "SELECT f FROM Feature f WHERE f.activeFeature = :activeFeature")})
 public class Feature implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +51,8 @@ public class Feature implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_feature")
     private String activeFeature;
-    @OneToMany(mappedBy = "idFeature")
-    private Collection<Log> logCollection;
+    @OneToMany(mappedBy = "idFeature", fetch = FetchType.LAZY)
+    private List<Log> logList;
 
     public Feature() {
     }
@@ -91,12 +91,12 @@ public class Feature implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Log> getLogCollection() {
-        return logCollection;
+    public List<Log> getLogList() {
+        return logList;
     }
 
-    public void setLogCollection(Collection<Log> logCollection) {
-        this.logCollection = logCollection;
+    public void setLogList(List<Log> logList) {
+        this.logList = logList;
     }
 
     @Override
@@ -125,4 +125,3 @@ public class Feature implements Serializable {
     }
     
 }
-

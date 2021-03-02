@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -26,16 +26,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "question_answer", catalog = "treatUfinal", schema = "")
+@Table(name = "question_answer")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "QuestionAnswer.findAll", query = "SELECT q FROM QuestionAnswer q"),
-    @NamedQuery(name = "QuestionAnswer.findByIdQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.idQuestionAnswer = :idQuestionAnswer"),
-    @NamedQuery(name = "QuestionAnswer.findByCreateDateQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.createDateQuestionAnswer = :createDateQuestionAnswer"),
-    @NamedQuery(name = "QuestionAnswer.findByUpdateDateQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.updateDateQuestionAnswer = :updateDateQuestionAnswer")})
+    @NamedQuery(name = "QuestionAnswer.findAll", query = "SELECT q FROM QuestionAnswer q")
+    , @NamedQuery(name = "QuestionAnswer.findByIdQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.idQuestionAnswer = :idQuestionAnswer")
+    , @NamedQuery(name = "QuestionAnswer.findByCreateDateQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.createDateQuestionAnswer = :createDateQuestionAnswer")
+    , @NamedQuery(name = "QuestionAnswer.findByUpdateDateQuestionAnswer", query = "SELECT q FROM QuestionAnswer q WHERE q.updateDateQuestionAnswer = :updateDateQuestionAnswer")})
 public class QuestionAnswer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,10 +56,10 @@ public class QuestionAnswer implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDateQuestionAnswer;
     @JoinColumn(name = "id_questioner_detail", referencedColumnName = "id_questioner_detail")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private QuestionerDetail idQuestionerDetail;
     @JoinColumn(name = "id_employee", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users idEmployee;
 
     public QuestionAnswer() {

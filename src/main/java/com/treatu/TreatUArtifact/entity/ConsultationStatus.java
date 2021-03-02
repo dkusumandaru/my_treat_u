@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "consultation_status", catalog = "treatUfinal", schema = "")
+@Table(name = "consultation_status")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ConsultationStatus.findAll", query = "SELECT c FROM ConsultationStatus c"),
-    @NamedQuery(name = "ConsultationStatus.findByIdConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.idConsultationStatus = :idConsultationStatus"),
-    @NamedQuery(name = "ConsultationStatus.findByNameConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.nameConsultationStatus = :nameConsultationStatus"),
-    @NamedQuery(name = "ConsultationStatus.findByActiveConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.activeConsultationStatus = :activeConsultationStatus")})
+    @NamedQuery(name = "ConsultationStatus.findAll", query = "SELECT c FROM ConsultationStatus c")
+    , @NamedQuery(name = "ConsultationStatus.findByIdConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.idConsultationStatus = :idConsultationStatus")
+    , @NamedQuery(name = "ConsultationStatus.findByNameConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.nameConsultationStatus = :nameConsultationStatus")
+    , @NamedQuery(name = "ConsultationStatus.findByActiveConsultationStatus", query = "SELECT c FROM ConsultationStatus c WHERE c.activeConsultationStatus = :activeConsultationStatus")})
 public class ConsultationStatus implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +51,8 @@ public class ConsultationStatus implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_consultation_status")
     private String activeConsultationStatus;
-    @OneToMany(mappedBy = "idConsultationStatus")
-    private Collection<Consultation> consultationCollection;
+    @OneToMany(mappedBy = "idConsultationStatus", fetch = FetchType.LAZY)
+    private List<Consultation> consultationList;
 
     public ConsultationStatus() {
     }
@@ -91,12 +91,12 @@ public class ConsultationStatus implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Consultation> getConsultationCollection() {
-        return consultationCollection;
+    public List<Consultation> getConsultationList() {
+        return consultationList;
     }
 
-    public void setConsultationCollection(Collection<Consultation> consultationCollection) {
-        this.consultationCollection = consultationCollection;
+    public void setConsultationList(List<Consultation> consultationList) {
+        this.consultationList = consultationList;
     }
 
     @Override
@@ -125,4 +125,3 @@ public class ConsultationStatus implements Serializable {
     }
     
 }
-

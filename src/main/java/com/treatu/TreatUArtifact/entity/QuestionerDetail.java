@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,11 +6,12 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -29,17 +29,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "questioner_detail", catalog = "treatUfinal", schema = "")
+@Table(name = "questioner_detail")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "QuestionerDetail.findAll", query = "SELECT q FROM QuestionerDetail q"),
-    @NamedQuery(name = "QuestionerDetail.findByIdQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.idQuestionerDetail = :idQuestionerDetail"),
-    @NamedQuery(name = "QuestionerDetail.findByCreateDateQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.createDateQuestionerDetail = :createDateQuestionerDetail"),
-    @NamedQuery(name = "QuestionerDetail.findByUpdateDateQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.updateDateQuestionerDetail = :updateDateQuestionerDetail"),
-    @NamedQuery(name = "QuestionerDetail.findByActiveQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.activeQuestionerDetail = :activeQuestionerDetail")})
+    @NamedQuery(name = "QuestionerDetail.findAll", query = "SELECT q FROM QuestionerDetail q")
+    , @NamedQuery(name = "QuestionerDetail.findByIdQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.idQuestionerDetail = :idQuestionerDetail")
+    , @NamedQuery(name = "QuestionerDetail.findByCreateDateQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.createDateQuestionerDetail = :createDateQuestionerDetail")
+    , @NamedQuery(name = "QuestionerDetail.findByUpdateDateQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.updateDateQuestionerDetail = :updateDateQuestionerDetail")
+    , @NamedQuery(name = "QuestionerDetail.findByActiveQuestionerDetail", query = "SELECT q FROM QuestionerDetail q WHERE q.activeQuestionerDetail = :activeQuestionerDetail")})
 public class QuestionerDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,16 +68,16 @@ public class QuestionerDetail implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_questioner_detail")
     private String activeQuestionerDetail;
-    @OneToMany(mappedBy = "idQuestionerDetail")
-    private Collection<QuestionAnswer> questionAnswerCollection;
+    @OneToMany(mappedBy = "idQuestionerDetail", fetch = FetchType.LAZY)
+    private List<QuestionAnswer> questionAnswerList;
     @JoinColumn(name = "create_by", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users createBy;
     @JoinColumn(name = "update_by", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users updateBy;
     @JoinColumn(name = "id_questioner", referencedColumnName = "id_questioner")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Questioner idQuestioner;
 
     public QuestionerDetail() {
@@ -141,12 +141,12 @@ public class QuestionerDetail implements Serializable {
     }
 
     @XmlTransient
-    public Collection<QuestionAnswer> getQuestionAnswerCollection() {
-        return questionAnswerCollection;
+    public List<QuestionAnswer> getQuestionAnswerList() {
+        return questionAnswerList;
     }
 
-    public void setQuestionAnswerCollection(Collection<QuestionAnswer> questionAnswerCollection) {
-        this.questionAnswerCollection = questionAnswerCollection;
+    public void setQuestionAnswerList(List<QuestionAnswer> questionAnswerList) {
+        this.questionAnswerList = questionAnswerList;
     }
 
     public Users getCreateBy() {

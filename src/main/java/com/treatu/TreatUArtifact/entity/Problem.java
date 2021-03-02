@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,10 +6,11 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,16 +25,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "problem", catalog = "treatUfinal", schema = "")
+@Table(name = "problem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Problem.findAll", query = "SELECT p FROM Problem p"),
-    @NamedQuery(name = "Problem.findByIdProblem", query = "SELECT p FROM Problem p WHERE p.idProblem = :idProblem"),
-    @NamedQuery(name = "Problem.findByNameProblem", query = "SELECT p FROM Problem p WHERE p.nameProblem = :nameProblem"),
-    @NamedQuery(name = "Problem.findByActiveProblem", query = "SELECT p FROM Problem p WHERE p.activeProblem = :activeProblem")})
+    @NamedQuery(name = "Problem.findAll", query = "SELECT p FROM Problem p")
+    , @NamedQuery(name = "Problem.findByIdProblem", query = "SELECT p FROM Problem p WHERE p.idProblem = :idProblem")
+    , @NamedQuery(name = "Problem.findByNameProblem", query = "SELECT p FROM Problem p WHERE p.nameProblem = :nameProblem")
+    , @NamedQuery(name = "Problem.findByActiveProblem", query = "SELECT p FROM Problem p WHERE p.activeProblem = :activeProblem")})
 public class Problem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +51,8 @@ public class Problem implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "active_problem")
     private String activeProblem;
-    @OneToMany(mappedBy = "idProblem")
-    private Collection<Consultation> consultationCollection;
+    @OneToMany(mappedBy = "idProblem", fetch = FetchType.LAZY)
+    private List<Consultation> consultationList;
 
     public Problem() {
     }
@@ -91,12 +91,12 @@ public class Problem implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Consultation> getConsultationCollection() {
-        return consultationCollection;
+    public List<Consultation> getConsultationList() {
+        return consultationList;
     }
 
-    public void setConsultationCollection(Collection<Consultation> consultationCollection) {
-        this.consultationCollection = consultationCollection;
+    public void setConsultationList(List<Consultation> consultationList) {
+        this.consultationList = consultationList;
     }
 
     @Override
@@ -125,4 +125,3 @@ public class Problem implements Serializable {
     }
     
 }
-

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,18 +25,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "room", catalog = "treatUfinal", schema = "")
+@Table(name = "room")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
-    @NamedQuery(name = "Room.findByIdRoom", query = "SELECT r FROM Room r WHERE r.idRoom = :idRoom"),
-    @NamedQuery(name = "Room.findByCapacityRoom", query = "SELECT r FROM Room r WHERE r.capacityRoom = :capacityRoom"),
-    @NamedQuery(name = "Room.findByUrlRoom", query = "SELECT r FROM Room r WHERE r.urlRoom = :urlRoom"),
-    @NamedQuery(name = "Room.findByCreateDateRoom", query = "SELECT r FROM Room r WHERE r.createDateRoom = :createDateRoom"),
-    @NamedQuery(name = "Room.findByUpdateDateRoom", query = "SELECT r FROM Room r WHERE r.updateDateRoom = :updateDateRoom")})
+    @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r")
+    , @NamedQuery(name = "Room.findByIdRoom", query = "SELECT r FROM Room r WHERE r.idRoom = :idRoom")
+    , @NamedQuery(name = "Room.findByCapacityRoom", query = "SELECT r FROM Room r WHERE r.capacityRoom = :capacityRoom")
+    , @NamedQuery(name = "Room.findByUrlRoom", query = "SELECT r FROM Room r WHERE r.urlRoom = :urlRoom")
+    , @NamedQuery(name = "Room.findByCreateDateRoom", query = "SELECT r FROM Room r WHERE r.createDateRoom = :createDateRoom")
+    , @NamedQuery(name = "Room.findByUpdateDateRoom", query = "SELECT r FROM Room r WHERE r.updateDateRoom = :updateDateRoom")})
 public class Room implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,13 +58,13 @@ public class Room implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDateRoom;
     @JoinColumn(name = "id_docter", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users idDocter;
     @JoinColumn(name = "create_by", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users createBy;
     @JoinColumn(name = "update_by", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users updateBy;
 
     public Room() {
@@ -164,4 +164,3 @@ public class Room implements Serializable {
     }
     
 }
-

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,11 +6,12 @@
 package com.treatu.TreatUArtifact.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -29,18 +29,18 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "questioner", catalog = "treatUfinal", schema = "")
+@Table(name = "questioner")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Questioner.findAll", query = "SELECT q FROM Questioner q"),
-    @NamedQuery(name = "Questioner.findByIdQuestioner", query = "SELECT q FROM Questioner q WHERE q.idQuestioner = :idQuestioner"),
-    @NamedQuery(name = "Questioner.findByTitleQuestioner", query = "SELECT q FROM Questioner q WHERE q.titleQuestioner = :titleQuestioner"),
-    @NamedQuery(name = "Questioner.findByCreateDateQuestioner", query = "SELECT q FROM Questioner q WHERE q.createDateQuestioner = :createDateQuestioner"),
-    @NamedQuery(name = "Questioner.findByUpdateDateQuestioner", query = "SELECT q FROM Questioner q WHERE q.updateDateQuestioner = :updateDateQuestioner"),
-    @NamedQuery(name = "Questioner.findByActiveQuestioner", query = "SELECT q FROM Questioner q WHERE q.activeQuestioner = :activeQuestioner")})
+    @NamedQuery(name = "Questioner.findAll", query = "SELECT q FROM Questioner q")
+    , @NamedQuery(name = "Questioner.findByIdQuestioner", query = "SELECT q FROM Questioner q WHERE q.idQuestioner = :idQuestioner")
+    , @NamedQuery(name = "Questioner.findByTitleQuestioner", query = "SELECT q FROM Questioner q WHERE q.titleQuestioner = :titleQuestioner")
+    , @NamedQuery(name = "Questioner.findByCreateDateQuestioner", query = "SELECT q FROM Questioner q WHERE q.createDateQuestioner = :createDateQuestioner")
+    , @NamedQuery(name = "Questioner.findByUpdateDateQuestioner", query = "SELECT q FROM Questioner q WHERE q.updateDateQuestioner = :updateDateQuestioner")
+    , @NamedQuery(name = "Questioner.findByActiveQuestioner", query = "SELECT q FROM Questioner q WHERE q.activeQuestioner = :activeQuestioner")})
 public class Questioner implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,13 +69,13 @@ public class Questioner implements Serializable {
     @Column(name = "active_questioner")
     private String activeQuestioner;
     @JoinColumn(name = "create_by", referencedColumnName = "id_user")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Users createBy;
     @JoinColumn(name = "update_by", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users updateBy;
-    @OneToMany(mappedBy = "idQuestioner")
-    private Collection<QuestionerDetail> questionerDetailCollection;
+    @OneToMany(mappedBy = "idQuestioner", fetch = FetchType.LAZY)
+    private List<QuestionerDetail> questionerDetailList;
 
     public Questioner() {
     }
@@ -154,12 +154,12 @@ public class Questioner implements Serializable {
     }
 
     @XmlTransient
-    public Collection<QuestionerDetail> getQuestionerDetailCollection() {
-        return questionerDetailCollection;
+    public List<QuestionerDetail> getQuestionerDetailList() {
+        return questionerDetailList;
     }
 
-    public void setQuestionerDetailCollection(Collection<QuestionerDetail> questionerDetailCollection) {
-        this.questionerDetailCollection = questionerDetailCollection;
+    public void setQuestionerDetailList(List<QuestionerDetail> questionerDetailList) {
+        this.questionerDetailList = questionerDetailList;
     }
 
     @Override
@@ -187,5 +187,4 @@ public class Questioner implements Serializable {
         return "com.treatu.TreatUArtifact.entity.Questioner[ idQuestioner=" + idQuestioner + " ]";
     }
     
-
 }

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -26,22 +26,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author creative
+ * @author D
  */
 @Entity
-@Table(name = "consultation", catalog = "treatUfinal", schema = "")
+@Table(name = "consultation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Consultation.findAll", query = "SELECT c FROM Consultation c"),
-    @NamedQuery(name = "Consultation.findByIdConsultation", query = "SELECT c FROM Consultation c WHERE c.idConsultation = :idConsultation"),
-    @NamedQuery(name = "Consultation.findByQueueConsultation", query = "SELECT c FROM Consultation c WHERE c.queueConsultation = :queueConsultation"),
-    @NamedQuery(name = "Consultation.findByDateConsultation", query = "SELECT c FROM Consultation c WHERE c.dateConsultation = :dateConsultation"),
-    @NamedQuery(name = "Consultation.findByCreateDateConsultation", query = "SELECT c FROM Consultation c WHERE c.createDateConsultation = :createDateConsultation"),
-    @NamedQuery(name = "Consultation.findByUpdateDateConsultation", query = "SELECT c FROM Consultation c WHERE c.updateDateConsultation = :updateDateConsultation"),
-    @NamedQuery(name = "Consultation.findByUpdateBy", query = "SELECT c FROM Consultation c WHERE c.updateBy = :updateBy"),
-    @NamedQuery(name = "Consultation.findByIdSchedule", query = "SELECT c FROM Consultation c WHERE c.idSchedule = :idSchedule"),
-    @NamedQuery(name = "Consultation.findByCounterConsultation", query = "SELECT c FROM Consultation c WHERE c.counterConsultation = :counterConsultation"),
-    @NamedQuery(name = "Consultation.findByResponseEmployee", query = "SELECT c FROM Consultation c WHERE c.responseEmployee = :responseEmployee")})
+    @NamedQuery(name = "Consultation.findAll", query = "SELECT c FROM Consultation c")
+    , @NamedQuery(name = "Consultation.findByIdConsultation", query = "SELECT c FROM Consultation c WHERE c.idConsultation = :idConsultation")
+    , @NamedQuery(name = "Consultation.findByQueueConsultation", query = "SELECT c FROM Consultation c WHERE c.queueConsultation = :queueConsultation")
+    , @NamedQuery(name = "Consultation.findByDateConsultation", query = "SELECT c FROM Consultation c WHERE c.dateConsultation = :dateConsultation")
+    , @NamedQuery(name = "Consultation.findByCreateDateConsultation", query = "SELECT c FROM Consultation c WHERE c.createDateConsultation = :createDateConsultation")
+    , @NamedQuery(name = "Consultation.findByUpdateDateConsultation", query = "SELECT c FROM Consultation c WHERE c.updateDateConsultation = :updateDateConsultation")
+    , @NamedQuery(name = "Consultation.findByUpdateBy", query = "SELECT c FROM Consultation c WHERE c.updateBy = :updateBy")
+    , @NamedQuery(name = "Consultation.findByIdSchedule", query = "SELECT c FROM Consultation c WHERE c.idSchedule = :idSchedule")
+    , @NamedQuery(name = "Consultation.findByCounterConsultation", query = "SELECT c FROM Consultation c WHERE c.counterConsultation = :counterConsultation")
+    , @NamedQuery(name = "Consultation.findByResponseEmployee", query = "SELECT c FROM Consultation c WHERE c.responseEmployee = :responseEmployee")})
 public class Consultation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -84,19 +84,19 @@ public class Consultation implements Serializable {
     @Column(name = "review_consultation")
     private String reviewConsultation;
     @JoinColumn(name = "id_doctor", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users idDoctor;
     @JoinColumn(name = "id_employee", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users idEmployee;
     @JoinColumn(name = "id_problem", referencedColumnName = "id_problem")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Problem idProblem;
     @JoinColumn(name = "id_stress_level", referencedColumnName = "id_stress_level")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StressLevel idStressLevel;
     @JoinColumn(name = "id_consultation_status", referencedColumnName = "id_consultation_status")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ConsultationStatus idConsultationStatus;
 
     public Consultation() {
@@ -259,4 +259,3 @@ public class Consultation implements Serializable {
     }
     
 }
-

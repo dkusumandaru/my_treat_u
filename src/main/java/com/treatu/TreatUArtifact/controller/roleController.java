@@ -5,9 +5,11 @@
  */
 package com.treatu.TreatUArtifact.controller;
 
+import com.treatu.TreatUArtifact.entity.Role;
 import com.treatu.TreatUArtifact.serviceimplements.roleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -21,9 +23,24 @@ public class roleController {
     roleService rService;
     
     @GetMapping("/roles")
-    public String home() {
+    public String home(Model roleModel) {
+        
+        Iterable<Role> roles = rService.getAll();
+        roleModel.addAttribute("roles", roles);
+        
         System.out.println("roles");
-        return "user/v_page_dashboard";
-    }    
+        System.out.println(roles);
+        return "roles/v_page";
+    }
+    
+    public String home(Model roleModel) {
+        
+        Iterable<Role> roles = rService.getAll();
+        roleModel.addAttribute("roles", roles);
+        
+        System.out.println("roles");
+        System.out.println(roles);
+        return "roles/v_page";
+    }
     
 }

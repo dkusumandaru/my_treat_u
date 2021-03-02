@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -37,9 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByIdUser", query = "SELECT u FROM Users u WHERE u.idUser = :idUser")
     , @NamedQuery(name = "Users.findByFirstName", query = "SELECT u FROM Users u WHERE u.firstName = :firstName")
     , @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName")
-    , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
-    , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")
-    , @NamedQuery(name = "Users.findByActive", query = "SELECT u FROM Users u WHERE u.active = :active")})
+    , @NamedQuery(name = "Users.findByEmailUser", query = "SELECT u FROM Users u WHERE u.emailUser = :emailUser")
+    , @NamedQuery(name = "Users.findByPasswordUser", query = "SELECT u FROM Users u WHERE u.passwordUser = :passwordUser")
+    , @NamedQuery(name = "Users.findByActiveUser", query = "SELECT u FROM Users u WHERE u.activeUser = :activeUser")})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,18 +56,17 @@ public class Users implements Serializable {
     @Size(max = 255)
     @Column(name = "last_name")
     private String lastName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
-    @Column(name = "email")
-    private String email;
+    @Column(name = "email_user")
+    private String emailUser;
     @Size(max = 255)
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password_user")
+    private String passwordUser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "active")
-    private String active;
+    @Column(name = "active_user")
+    private String activeUser;
     @OneToMany(mappedBy = "idUser", fetch = FetchType.LAZY)
     private List<Log> logList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDoctor", fetch = FetchType.LAZY)
@@ -77,6 +75,10 @@ public class Users implements Serializable {
     private List<QuestionAnswer> questionAnswerList;
     @OneToMany(mappedBy = "idDocter", fetch = FetchType.LAZY)
     private List<Room> roomList;
+    @OneToMany(mappedBy = "createBy", fetch = FetchType.LAZY)
+    private List<Room> roomList1;
+    @OneToMany(mappedBy = "updateBy", fetch = FetchType.LAZY)
+    private List<Room> roomList2;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @ManyToOne(fetch = FetchType.LAZY)
     private Role idRole;
@@ -103,10 +105,10 @@ public class Users implements Serializable {
         this.idUser = idUser;
     }
 
-    public Users(String idUser, String firstName, String active) {
+    public Users(String idUser, String firstName, String activeUser) {
         this.idUser = idUser;
         this.firstName = firstName;
-        this.active = active;
+        this.activeUser = activeUser;
     }
 
     public String getIdUser() {
@@ -133,28 +135,28 @@ public class Users implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailUser() {
+        return emailUser;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordUser() {
+        return passwordUser;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordUser(String passwordUser) {
+        this.passwordUser = passwordUser;
     }
 
-    public String getActive() {
-        return active;
+    public String getActiveUser() {
+        return activeUser;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setActiveUser(String activeUser) {
+        this.activeUser = activeUser;
     }
 
     @XmlTransient
@@ -191,6 +193,24 @@ public class Users implements Serializable {
 
     public void setRoomList(List<Room> roomList) {
         this.roomList = roomList;
+    }
+
+    @XmlTransient
+    public List<Room> getRoomList1() {
+        return roomList1;
+    }
+
+    public void setRoomList1(List<Room> roomList1) {
+        this.roomList1 = roomList1;
+    }
+
+    @XmlTransient
+    public List<Room> getRoomList2() {
+        return roomList2;
+    }
+
+    public void setRoomList2(List<Room> roomList2) {
+        this.roomList2 = roomList2;
     }
 
     public Role getIdRole() {
@@ -286,5 +306,6 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "com.treatu.TreatUArtifact.entity.Users[ idUser=" + idUser + " ]";
-    } 
+    }
+    
 }
