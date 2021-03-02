@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -23,24 +25,34 @@ public class roleController {
     roleService rService;
     
     @GetMapping("/roles")
-    public String home(Model roleModel) {
+    public String getRole(Model roleModel) {
         
         Iterable<Role> roles = rService.getAll();
         roleModel.addAttribute("roles", roles);
         
-        System.out.println("roles");
-        System.out.println(roles);
+        Role role = new Role();
+        roleModel.addAttribute("addRole", role);
+       
+        roleModel.addAttribute("editRole", role);  
+        
         return "roles/v_page";
     }
     
-    public String home(Model roleModel) {
-        
-        Iterable<Role> roles = rService.getAll();
-        roleModel.addAttribute("roles", roles);
-        
-        System.out.println("roles");
-        System.out.println(roles);
-        return "roles/v_page";
+    
+    @PostMapping("/roles/add")
+    public String addRole(@ModelAttribute("addRole") Role role){
+        System.out.println("Here ^_^");
+        System.out.println(role);
+        this.rService.save(role);
+        return "redirect:/roles";
+    }
+    
+    @PostMapping("/roles/edit")
+    public String editRole(@ModelAttribute("editRole") Role role){
+        System.out.println("Here ^_^");
+        System.out.println(role);
+        this.rService.save(role);
+        return "redirect:/roles";
     }
     
 }
